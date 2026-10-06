@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Machine Learning Python Programs</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #111827;
+            padding: 20px;
+        }
+
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #374151;
+            color: white;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .sidebar button:hover {
+            background: #2563eb;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .program {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .program.active {
+            display: block;
+        }
+
+        h2 {
+            color: #1f2937;
+        }
+
+        pre {
+            background: #111827;
+            color: #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Machine Learning Python Programs</h1>
+    <p>Six Machine Learning Programs</p>
+</header>
+
+<div class="container">
+
+    <div class="sidebar">
+
+        <button onclick="showProgram('decision-tree')">
+            1. Decision Tree
+        </button>
+
+        <button onclick="showProgram('kmeans-em')">
+            2. K-Means + EM
+        </button>
+
+        <button onclick="showProgram('knn')">
+            3. KNN
+        </button>
+
+        <button onclick="showProgram('lwr')">
+            4. Locally Weighted Regression
+        </button>
+
+        <button onclick="showProgram('csv')">
+            5. CSV Handling
+        </button>
+
+        <button onclick="showProgram('naive-bayes')">
+            6. Naive Bayes
+        </button>
+
+    </div>
+
+    <div class="content">
+
+        <!-- PROGRAM 1 -->
+
+        <div id="decision-tree" class="program active">
+
+            <h2>1. Decision Tree Classification</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code1')">
+                Copy Code
+            </button>
+
+            <pre id="code1">from sklearn.tree import DecisionTreeClassifier
+
+X = [[0], [0], [1], [1], [0]]
+y = [0, 0, 1, 1, 1]
+
+model = DecisionTreeClassifier(criterion='entropy')
+model.fit(X, y)
+
+prediction = model.predict([[0]])
+
+print("Sample Classification:", "Yes" if prediction[0] else "No")</pre>
+
+        </div>
+
+
+        <!-- PROGRAM 2 -->
+
+        <div id="kmeans-em" class="program">
+
+            <h2>2. K-Means + EM / Gaussian Mixture</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code2')">
+                Copy Code
+            </button>
+
+            <pre id="code2">from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+
+X = load_iris().data
+
+# K-Means
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+kmeans.fit(X)
+
+# EM using K-Means centers
+gmm = GaussianMixture(
+    n_components=3,
+    means_init=kmeans.cluster_centers_,
+    random_state=42
+)
+
+gmm.fit(X)
+
+print("K-Means Centers:")
+print(kmeans.cluster_centers_)
+
+print("\nCluster Probabilities:")
+print(gmm.predict_proba(X)[:5])
+
+print("\nFinal EM Clusters:")
+print(gmm.predict(X))</pre>
+
+        </div>
+
+
+        <!-- PROGRAM 3 -->
+
+        <div id="knn" class="program">
+
+            <h2>3. K-Nearest Neighbors (KNN)</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code3')">
+                Copy Code
+            </button>
+
+            <pre id="code3">import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+iris = load_iris()
+
+X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=1
+)
+
+knn = KNeighborsClassifier(n_neighbors=10)
+knn.fit(X_train, y_train)
+
+print("Accuracy:", knn.score(X_test, y_test))
+print("Prediction:", knn.predict([[6.5, 3.0, 5.8, 2.2]]))</pre>
+
+        </div>
+
+
+        <!-- PROGRAM 4 -->
+
+        <div id="lwr" class="program">
+
+            <h2>4. Locally Weighted Regression</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code4')">
+                Copy Code
+            </button>
+
+            <pre id="code4">import numpy as np
+from sklearn.model_selection import train_test_split
+
+X = np.arange(1, 11).reshape(-1, 1)
+
+y = np.array([
+    2, 4, 5, 4, 5,
+    7, 8, 9, 10, 12
+])
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+tau = 1
+
+def predict(x):
+
+    w = np.exp(
+        -((X_train-x)**2)/(2*tau**2)
+    ).ravel()
+
+    A = np.c_[
+        np.ones(len(X_train)),
+        X_train
+    ]
+
+    theta = np.linalg.pinv(
+        A.T @ np.diag(w) @ A
+    ) @ A.T @ np.diag(w) @ y_train
+
+    return np.array([1, x[0]]) @ theta
+
+
+y_pred = np.array([
+    predict(x) for x in X_test
+])
+
+print("Actual values:", y_test)
+print("Predicted values:", y_pred)</pre>
+
+        </div>
+
+
+        <!-- PROGRAM 5 -->
+
+        <div id="csv" class="program">
+
+            <h2>5. CSV File Handling</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code5')">
+                Copy Code
+            </button>
+
+            <pre id="code5">import csv
+
+data = [
+    ['Name','Age','Qualification'],
+    ['Meera',21,'BSc'],
+    ['Arun',22,'MSc'],
+    ['Deepak',24,'MBBS']
+]
+
+with open('data.csv','w',newline='') as f:
+    csv.writer(f).writerows(data)
+
+with open('data.csv','r') as f:
+
+    for row in csv.reader(f):
+        print(row)</pre>
+
+        </div>
+
+
+        <!-- PROGRAM 6 -->
+
+        <div id="naive-bayes" class="program">
+
+            <h2>6. Naive Bayes Classification</h2>
+
+            <button class="copy-btn"
+                    onclick="copyCode('code6')">
+                Copy Code
+            </button>
+
+            <pre id="code6">from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    classification_report
+)
+
+iris = load_iris()
+
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data,
+    iris.target,
+    test_size=0.3,
+    random_state=42
+)
+
+model = GaussianNB()
+
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print(
+    "Accuracy:",
+    accuracy_score(y_test, y_pred)
+)
+
+print(
+    "Precision:",
+    precision_score(
+        y_test,
+        y_pred,
+        average='weighted'
+    )
+)
+
+print(
+    "Recall:",
+    recall_score(
+        y_test,
+        y_pred,
+        average='weighted'
+    )
+)
+
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        target_names=iris.target_names
+    )
+)</pre>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function showProgram(programId) {
+
+    const programs = document.querySelectorAll('.program');
+
+    programs.forEach(function(program) {
+        program.classList.remove('active');
+    });
+
+    document.getElementById(programId)
+        .classList.add('active');
+}
+
+
+function copyCode(codeId) {
+
+    const code = document.getElementById(codeId).innerText;
+
+    navigator.clipboard.writeText(code);
+
+    alert("Code copied!");
+}
+
+</script>
+
+</body>
+</html>
